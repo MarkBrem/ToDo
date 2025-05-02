@@ -1,36 +1,33 @@
-import { Component } from "react";
+import { useState } from 'react';
 
-export class TodoEditor extends Component {
+export const TodoEditor = ({ Show, addTodo }) => {
+  const [textValue, setTextValue] = useState('');
 
-    state={
-        textValue: '',
-    }
+  const handleChange = e => {
+    setTextValue(e.currentTarget.value);
+  };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    addTodo(textValue);
+    Show();
+    e.currentTarget.reset();
+  };
 
-    handleChange = (e) =>{
-        this.setState({textValue: e.currentTarget.value})
-    }
+  return (
+    <>
+      <form action="" onSubmit={handleSubmit}>
+        <label htmlFor="">
+          <textarea
+            name="edit"
+            id=""
+            value={textValue}
+            onChange={handleChange}
+          ></textarea>
+        </label>
 
-    handleSubmit = (e)=>{
-        e.preventDefault()
-
-        this.props.addTodo(this.state.textValue)
-        this.props.Show()
-        e.currentTarget.reset()
-    }
-
-    render(){
-        
-        return<>
-        <form action="" onSubmit={this.handleSubmit}>
-            <label htmlFor="">
-                <textarea name="edit" id="" value={this.state.textValue} onChange={this.handleChange}></textarea>
-            </label>
-        
-            <button>Додати</button>
-        </form>
-        
-
-        </>
-    }
-}
+        <button>Додати</button>
+      </form>
+    </>
+  );
+};
